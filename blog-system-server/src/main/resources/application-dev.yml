@@ -1,0 +1,24 @@
+server:
+  port: 2021
+spring:
+  application:
+    name: blog_system
+  datasource:
+    url: jdbc:mysql://192.168.1.10:3306/xz_blog_system?characterEncoding=utf-8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+  jpa:
+    show-sql: true
+  redis:
+    port: 6379
+    host: 192.168.1.10
+    password: 123456
+  data:
+    solr:
+      host: http://192.168.1.10:8983/solr/sob_blog_core
+blog.image.save-path: ../../images
+# 2MB
+blog.image.max-size: 2097152
+# 控制swagger的开关
+blog.swagger.enable: true

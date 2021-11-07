@@ -1,0 +1,27 @@
+server:
+  port: 8010
+spring:
+  application:
+    name: blog_system
+  datasource:
+    url: jdbc:mysql://172.19.0.13:3306/sob_blog_system?characterEncoding=utf-8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 1234567890-=
+  jpa:
+    show-sql: false
+  redis:
+    port: 6379
+    host: 172.19.0.13
+    password: =-0987654321
+    database: 1
+  data:
+    solr:
+      host: http://172.19.0.13:8983/solr/sob_blog_core
+# 我们使用docker来部署，这里的路径，应该是docker内部的路径
+# 可以映射成这个路径：/home/aosp/docker/sobBlog/upload
+blog.image.save-path: /home/ubuntu/docker/uoload
+# 2MB
+blog.image.max-size: 2097152
+# 控制swagger的开关
+blog.swagger.enable: false
