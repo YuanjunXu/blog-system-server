@@ -1,8 +1,10 @@
 package blog.system.server.controller.portal;
 
+import blog.system.server.entity.ArticleNoContentEntity;
 import blog.system.server.service.IArticleService;
 import blog.system.server.service.ICategoryService;
 import blog.system.server.utils.Constants;
+import blog.system.server.utils.PageResult;
 import blog.system.server.utils.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +34,7 @@ public class ArticlePortalApi {
      */
     @ApiOperation("文章列表")
     @GetMapping("/list/{page}/{size}")
-    public ResponseResult listArticle(@PathVariable("page") int page, @PathVariable("size") int size) {
+    public ResponseResult<PageResult<ArticleNoContentEntity>> listArticle(@PathVariable("page") int page, @PathVariable("size") int size) {
         return articleService.listArticles(page, size, null, null, Constants.Article.STATE_PUBLISH);
     }
 
