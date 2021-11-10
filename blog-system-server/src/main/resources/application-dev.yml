@@ -16,7 +16,7 @@ spring:
     password: 123456
   data:
     solr:
-      host: http://192.168.1.10:8983/solr/sob_blog_core
+      host: http://192.168.1.10:8983/solr/blog_core
 blog.image.save-path: ../../images
 # 2MB
 blog.image.max-size: 2097152

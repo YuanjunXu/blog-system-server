@@ -102,7 +102,7 @@ public class SolrServiceImpl extends BaseService implements ISolrService {
         solrQuery.setHighlightFragsize(500);
         //设置返回字段
         //blog_content,blog_create_time,blog_labels,blog_url,blog_title,blog_view_count
-        solrQuery.addField("id,blog_content,blog_create_time,blog_labels,blog_url,blog_title,blog_view_count");
+        solrQuery.addField("id,blog_title,blog_content,blog_create_time,blog_labels,blog_url,blog_title,blog_view_count");
         //
         //4、搜索
         try {
