@@ -50,7 +50,7 @@ public interface Constants {
 
     interface Page {
         int DEFAULT_PAGE = 1;
-        int DEFAULT_SIZE = 1;
+        int DEFAULT_SIZE = 2;
         int MAX_SIZE = 30;
     }
 

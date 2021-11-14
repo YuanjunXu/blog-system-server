@@ -1,6 +1,6 @@
 package blog.system.server.utils;
 
-import blog.system.server.entity.UserEntity;
+import blog.system.server.pojo.SobUser;
 import io.jsonwebtoken.Claims;
 
 import java.util.HashMap;
@@ -16,7 +16,7 @@ public class ClaimsUtils {
     public static final String SIGN = "sign";
     public static final String FROM = "from";
 
-    public static Map<String, Object> sobUser2Claims(UserEntity sobUser, String from) {
+    public static Map<String, Object> sobUser2Claims(SobUser sobUser, String from) {
         Map<String, Object> claims = new HashMap<>();
         claims.put(ID, sobUser.getId());
         claims.put(USER_NAME, sobUser.getUserName());
@@ -28,8 +28,8 @@ public class ClaimsUtils {
         return claims;
     }
 
-    public static UserEntity claims2SobUser(Claims claims) {
-        UserEntity sobUser = new UserEntity();
+    public static SobUser claims2SobUser(Claims claims) {
+        SobUser sobUser = new SobUser();
         String id = (String) claims.get(ID);
         sobUser.setId(id);
         String userName = (String) claims.get(USER_NAME);

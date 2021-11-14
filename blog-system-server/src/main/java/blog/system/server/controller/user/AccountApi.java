@@ -1,17 +1,14 @@
 package blog.system.server.controller.user;
 
-import blog.system.server.entity.UserEntity;
-import blog.system.server.service.IUserAccountService;
-import blog.system.server.utils.ResponseResult;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import blog.system.server.pojo.SobUser;
+import blog.system.server.response.ResponseResult;
+import blog.system.server.services.IUserAccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Api(tags = "账号相关")
 @Slf4j
 @RestController
 @RequestMapping("/user/account")
@@ -25,9 +22,8 @@ public class AccountApi {
      *
      * @return
      */
-    @ApiOperation("初始化管理员账户")
     @PostMapping("/admin_account")
-    public ResponseResult initManagerAccount(@RequestBody UserEntity sobUser, HttpServletRequest request) {
+    public ResponseResult initManagerAccount(@RequestBody SobUser sobUser, HttpServletRequest request) {
         log.info("user name == > " + sobUser.getUserName());
         log.info("password == > " + sobUser.getPassword());
         log.info("email == > " + sobUser.getEmail());
@@ -48,10 +44,9 @@ public class AccountApi {
      * @param sobUser 用户bean类，封装着账号和密码
      * @return
      */
-    @ApiOperation("登录")
     @PostMapping("/login/{captcha}/")
     public ResponseResult login(@PathVariable("captcha") String captcha,
-                                @RequestBody UserEntity sobUser,
+                                @RequestBody SobUser sobUser,
                                 @RequestParam(value = "from", required = false) String from) {
         return userAccountService.doLogin(captcha, sobUser, from);
     }
@@ -67,13 +62,11 @@ public class AccountApi {
      *
      * @return
      */
-    @ApiOperation("登出")
     @GetMapping("/logout")
     public ResponseResult logout() {
         return userAccountService.doLogout();
     }
 
-    @ApiOperation("更新二维码状态")
     @PutMapping("/qr_code_state/{loginId}")
     public ResponseResult updateQrCodeLoginState(@PathVariable("loginId") String loginId) {
         return userAccountService.updateQrCodeLoginState(loginId);
@@ -84,7 +77,6 @@ public class AccountApi {
      *
      * @return
      */
-    @ApiOperation("检查二维码的登录状态")
     @GetMapping("/qr_code_state/{loginId}")
     public ResponseResult checkQrCodeLoginState(@PathVariable("loginId") String loginId) {
         return userAccountService.checkQrCodeLoginState(loginId);

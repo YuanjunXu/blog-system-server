@@ -1,17 +1,14 @@
 package blog.system.server.controller.user;
 
 
-import blog.system.server.entity.UserEntity;
-import blog.system.server.service.IUserService;
-import blog.system.server.utils.ResponseResult;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import blog.system.server.pojo.SobUser;
+import blog.system.server.response.ResponseResult;
+import blog.system.server.services.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-@Api    (tags = "用户相关")
 @Slf4j
 @RestController
 @RequestMapping("/user")
@@ -26,9 +23,8 @@ public class UserApi {
      * @param sobUser
      * @return
      */
-    @ApiOperation("注册")
     @PostMapping("/join_in")
-    public ResponseResult register(@RequestBody UserEntity sobUser,
+    public ResponseResult register(@RequestBody SobUser sobUser,
                                    @RequestParam("email_code") String emailCode,
                                    @RequestParam("captcha_code") String captchaCode) {
 
@@ -36,7 +32,7 @@ public class UserApi {
     }
 
 
-    @ApiOperation("用户列表")
+
     @PreAuthorize("@permission.admin()")
     @GetMapping("/list")
     public ResponseResult listUsers(@RequestParam("page") int page,
@@ -71,10 +67,9 @@ public class UserApi {
      *
      * @return
      */
-    @ApiOperation("修改密码")
     @PutMapping("/password/{verifyCode}")
     public ResponseResult updatePassword(@PathVariable("verifyCode") String verifyCode,
-                                         @RequestBody UserEntity sobUser) {
+                                         @RequestBody SobUser sobUser) {
         return userService.updateUserPassword(verifyCode, sobUser);
     }
 
@@ -85,7 +80,6 @@ public class UserApi {
      * @param userId
      * @return
      */
-    @ApiOperation("删除用户")
     @PreAuthorize("@permission.admin()")
     @DeleteMapping("/{userId}")
     public ResponseResult deleteUser(@PathVariable("userId") String userId) {
@@ -114,7 +108,6 @@ public class UserApi {
      *
      * @return
      */
-    @ApiOperation("修改邮箱")
     @PutMapping("/email")
     public ResponseResult updateEmail(@RequestParam("email") String email,
                                       @RequestParam("verify_code") String verifyCode) {
@@ -122,7 +115,7 @@ public class UserApi {
     }
 
 
-    @ApiOperation("重置密码")
+
     @PreAuthorize("@permission.admin()")
     @PutMapping("/reset_password/{userId}")
     public ResponseResult resetPassword(@PathVariable("userId") String userId, @RequestParam("password") String password) {

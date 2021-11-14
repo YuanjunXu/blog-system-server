@@ -7,15 +7,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
- * Description:
- *
- * @author 宣君
- * @date 2021-11-07 0:13
+ * RBAC role-base-access-control
+ * 需要三张表：
+ * 用户表 --> 角色 --> 权限（对应的就是API的访问）
+ * 角色表
+ * 权限表
  */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //所有都放行
@@ -23,4 +25,5 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()
                 .and().csrf().disable();
     }
+
 }

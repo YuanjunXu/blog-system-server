@@ -1,20 +1,15 @@
 package blog.system.server.controller.portal;
 
-import blog.system.server.entity.ArticleNoContentEntity;
-import blog.system.server.service.IArticleService;
-import blog.system.server.service.ICategoryService;
+import blog.system.server.response.ResponseResult;
+import blog.system.server.services.IArticleService;
+import blog.system.server.services.ICategoryService;
 import blog.system.server.utils.Constants;
-import blog.system.server.utils.PageResult;
-import blog.system.server.utils.ResponseResult;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(tags = "文章相关")
 @RestController
 @RequestMapping("/portal/article")
 public class ArticlePortalApi {
@@ -32,13 +27,11 @@ public class ArticlePortalApi {
      * @param size
      * @return
      */
-    @ApiOperation("文章列表")
     @GetMapping("/list/{page}/{size}")
-    public ResponseResult<PageResult<ArticleNoContentEntity>> listArticle(@PathVariable("page") int page, @PathVariable("size") int size) {
+    public ResponseResult listArticle(@PathVariable("page") int page, @PathVariable("size") int size) {
         return articleService.listArticles(page, size, null, null, Constants.Article.STATE_PUBLISH);
     }
 
-    @ApiOperation("根据分类获取文章列表")
     @GetMapping("/list/{categoryId}/{page}/{size}")
     public ResponseResult listArticleByCategoryId(@PathVariable("categoryId") String categoryId,
                                                   @PathVariable("page") int page,
@@ -56,7 +49,6 @@ public class ArticlePortalApi {
      * @param articleId
      * @return
      */
-    @ApiOperation("文章详情")
     @GetMapping("/{articleId}")
     public ResponseResult getArticleDetail(@PathVariable("articleId") String articleId) {
         return articleService.getArticleById(articleId);
@@ -72,19 +64,16 @@ public class ArticlePortalApi {
      * @param articleId
      * @return
      */
-    @ApiOperation("文章列表:聚合搜索，文章ID检索标签，根据标签匹配文章")
     @GetMapping("/recommend/{articleId}/{size}")
     public ResponseResult getRecommendArticles(@PathVariable("articleId") String articleId, @PathVariable("size") int size) {
         return articleService.listRecommendArticle(articleId, size);
     }
 
-    @ApiOperation("置顶文章列表")
     @GetMapping("/top")
     public ResponseResult getTopArticle() {
         return articleService.listTopArticles();
     }
 
-    @ApiOperation("标签搜索文章")
     @GetMapping("/list/label/{label}/{page}/{size}")
     public ResponseResult listArticleByLabel(@PathVariable("label") String label,
                                              @PathVariable("page") int page, @PathVariable("size") int size) {
@@ -99,7 +88,6 @@ public class ArticlePortalApi {
      * @param size
      * @return
      */
-    @ApiOperation("获取标签云")
     @GetMapping("/label/{size}")
     public ResponseResult getLabels(@PathVariable("size") int size) {
         return articleService.listLabels(size);
@@ -109,7 +97,7 @@ public class ArticlePortalApi {
     @Autowired
     private ICategoryService categoryService;
 
-    @ApiOperation("获取分类")
+
     @GetMapping("/categories")
     public ResponseResult getCategories() {
         return categoryService.listCategories();

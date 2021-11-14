@@ -13,7 +13,7 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
-        <File>logs/sob_system_blog.log</File>
+        <File>logs/xz_blog_system_log.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--分日期存储，最多保存30天，每个文件最大10M-->
             <fileNamePattern>logs/sob_system_blog.%d.%i.log</fileNamePattern>

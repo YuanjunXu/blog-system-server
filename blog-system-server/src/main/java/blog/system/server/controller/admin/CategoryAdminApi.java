@@ -1,11 +1,10 @@
 package blog.system.server.controller.admin;
 
-import blog.system.server.entity.CategoriesEntity;
+
 import blog.system.server.interceptor.CheckTooFrequentCommit;
-import blog.system.server.service.ICategoryService;
-import blog.system.server.utils.ResponseResult;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import blog.system.server.pojo.Category;
+import blog.system.server.response.ResponseResult;
+import blog.system.server.services.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 管理中心，分类的API
  */
-@Api(tags = "分类管理")
 @RestController
 @RequestMapping("/admin/category")
 public class CategoryAdminApi {
@@ -27,11 +25,10 @@ public class CategoryAdminApi {
      *
      * @return
      */
-    @ApiOperation("添加分类")
     @CheckTooFrequentCommit
     @PreAuthorize("@permission.admin()")
     @PostMapping
-    public ResponseResult addCategory(@RequestBody CategoriesEntity category) {
+    public ResponseResult addCategory(@RequestBody Category category) {
         return categoryService.addCategory(category);
     }
 
@@ -41,7 +38,6 @@ public class CategoryAdminApi {
      * @param categoryId
      * @return
      */
-    @ApiOperation("删除分类")
     @PreAuthorize("@permission.admin()")
     @DeleteMapping("/{categoryId}")
     public ResponseResult deleteCategory(@PathVariable("categoryId") String categoryId) {
@@ -55,11 +51,10 @@ public class CategoryAdminApi {
      * @param category
      * @return
      */
-    @ApiOperation("更新分类")
     @CheckTooFrequentCommit
     @PreAuthorize("@permission.admin()")
     @PutMapping("/{categoryId}")
-    public ResponseResult updateCategory(@PathVariable("categoryId") String categoryId, @RequestBody CategoriesEntity category) {
+    public ResponseResult updateCategory(@PathVariable("categoryId") String categoryId, @RequestBody Category category) {
         return categoryService.updateCategory(categoryId, category);
     }
 
@@ -74,7 +69,6 @@ public class CategoryAdminApi {
      * @param categoryId
      * @return
      */
-    @ApiOperation("获取分类")
     @PreAuthorize("@permission.admin()")
     @GetMapping("/{categoryId}")
     public ResponseResult getCategory(@PathVariable("categoryId") String categoryId) {
@@ -88,7 +82,6 @@ public class CategoryAdminApi {
      *
      * @return
      */
-    @ApiOperation("获取分类列表")
     @PreAuthorize("@permission.admin()")
     @GetMapping("/list")
     public ResponseResult listCategories() {

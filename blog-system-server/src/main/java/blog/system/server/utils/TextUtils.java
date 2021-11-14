@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 @Slf4j
 public class TextUtils {
 
-    public static final String regEx = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+    public static final String regEx ="^\\s*\\w+(?:\\.{0,1}[\\w-]+)*@[a-zA-Z0-9]+(?:[-.][a-zA-Z0-9]+)*\\.[a-zA-Z]+\\s*$";
 
     public static boolean isEmpty(String text) {
         return text == null || text.length() == 0;

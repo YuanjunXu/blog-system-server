@@ -1,18 +1,15 @@
 package blog.system.server.controller.portal;
 
-import blog.system.server.service.IFriendLinkService;
-import blog.system.server.service.ILoopService;
-import blog.system.server.service.IWebSizeInfoService;
-import blog.system.server.utils.ResponseResult;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import blog.system.server.response.ResponseResult;
+import blog.system.server.services.IFriendLinkService;
+import blog.system.server.services.ILoopService;
+import blog.system.server.services.IWebSizeInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(tags = "网站信息")
 @RestController
 @RequestMapping("/portal/web_size_info")
 public class WebSizeInfoPortalApi {
@@ -26,31 +23,28 @@ public class WebSizeInfoPortalApi {
     @Autowired
     private IWebSizeInfoService sizeInfoService;
 
-    @ApiOperation("获取网站信息")
+
     @GetMapping("/title")
     public ResponseResult getWebSizeTitle() {
         return sizeInfoService.getWebSizeTitle();
     }
 
-    @ApiOperation("访问量")
     @GetMapping("/view_count")
     public ResponseResult getWebSizeViewCount() {
         return sizeInfoService.getSizeViewCount();
     }
 
-    @ApiOperation("获取SEO信息")
     @GetMapping("/seo")
     public ResponseResult getWebSizeSeoInfo() {
         return sizeInfoService.getSeoInfo();
     }
 
-    @ApiOperation("获取轮播图")
+
     @GetMapping("/loop")
     public ResponseResult getLoops() {
         return loopService.listLoops();
     }
 
-    @ApiOperation("获取友链")
     @GetMapping("/friend_link")
     public ResponseResult getLinks() {
         return friendLinkService.listFriendLinks();
@@ -72,7 +66,6 @@ public class WebSizeInfoPortalApi {
      * mysql的时机，用户读取网站总访问量的时候，我们就读取一redis的，并且更新到mysql中
      * 如果redis里没有，那就读取mysql写到reds里的
      */
-    @ApiOperation("更新访问量")
     @PutMapping("/view_count")
     public void updateViewCount() {
         sizeInfoService.updateViewCount();

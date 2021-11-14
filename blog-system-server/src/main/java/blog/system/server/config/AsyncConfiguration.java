@@ -7,9 +7,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
 
-/**
- * 线程池配置
- */
 @Configuration
 @EnableAsync
 public class AsyncConfiguration {
@@ -19,7 +16,7 @@ public class AsyncConfiguration {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(2);
         executor.setMaxPoolSize(10);
-        executor.setThreadNamePrefix("blog_task_worker-");
+        executor.setThreadNamePrefix("sob_blog_task_worker-");
         executor.setQueueCapacity(30);
         executor.initialize();
         return executor;

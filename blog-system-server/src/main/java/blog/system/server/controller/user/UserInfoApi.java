@@ -1,14 +1,11 @@
 package blog.system.server.controller.user;
 
-import blog.system.server.entity.UserEntity;
-import blog.system.server.service.IUserInfoService;
-import blog.system.server.utils.ResponseResult;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import blog.system.server.pojo.SobUser;
+import blog.system.server.response.ResponseResult;
+import blog.system.server.services.IUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@Api(tags = "用户信息")
 @RestController
 @RequestMapping("/user/user_info")
 public class UserInfoApi {
@@ -21,7 +18,6 @@ public class UserInfoApi {
      *
      * @return
      */
-    @ApiOperation("获取作者信息")
     @GetMapping("/{userId}")
     public ResponseResult getUserInfo(@PathVariable("userId") String userId) {
         return userInfoService.getUserInfo(userId);
@@ -39,9 +35,8 @@ public class UserInfoApi {
      *
      * @return
      */
-    @ApiOperation("修改用户信息")
     @PutMapping("/{userId}")
-    public ResponseResult updateUserInfo(@PathVariable("userId") String userId, @RequestBody UserEntity sobUser) {
+    public ResponseResult updateUserInfo(@PathVariable("userId") String userId, @RequestBody SobUser sobUser) {
         return userInfoService.updateUserInfo(userId, sobUser);
     }
 

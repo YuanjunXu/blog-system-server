@@ -12,17 +12,17 @@ import java.util.Map;
 public class JwtUtil {
 
     //盐值
-    private  static String key = "ad128433d8e3356e7024009bf6add2ab";
+    private static String key = "ad128433d8e3356e7024009bf6add2ab";
 
     //单位是毫秒
-    private static   long ttl = Constants.TimeValueInMillions.HOUR_2;//2个小时
+    private static long ttl = Constants.TimeValueInMillions.HOUR_2;//2个小时
 
     public String getKey() {
         return key;
     }
 
     public void setKey(String key) {
-        JwtUtil.key = key;
+        this.key = key;
     }
 
     public long getTtl() {
@@ -30,7 +30,7 @@ public class JwtUtil {
     }
 
     public void setTtl(long ttl) {
-        JwtUtil.ttl = ttl;
+        this.ttl = ttl;
     }
 
     /**

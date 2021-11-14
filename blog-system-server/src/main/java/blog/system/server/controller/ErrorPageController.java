@@ -1,7 +1,6 @@
 package blog.system.server.controller;
 
-import blog.system.server.utils.ResponseResult;
-import org.springframework.http.HttpStatus;
+import blog.system.server.response.ResponseResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,21 +12,21 @@ public class ErrorPageController {
 
     @RequestMapping("/404")
     public ResponseResult page404() {
-        return new ResponseResult(HttpStatus.NOT_FOUND, "页面丢失！");
+        return ResponseResult.ERROR_404();
     }
 
     @RequestMapping("/403")
     public ResponseResult page403() {
-        return new ResponseResult(HttpStatus.FORBIDDEN, "禁止访问！");
+        return ResponseResult.ERROR_403();
     }
 
     @RequestMapping("/504")
     public ResponseResult page504() {
-        return new ResponseResult(HttpStatus.GATEWAY_TIMEOUT, "系统繁忙，稍后重试！");
+        return ResponseResult.ERROR_504();
     }
 
     @RequestMapping("/505")
     public ResponseResult page505() {
-        return new ResponseResult(HttpStatus.HTTP_VERSION_NOT_SUPPORTED, "请求错误，请检查数据！");
+        return ResponseResult.ERROR_505();
     }
 }

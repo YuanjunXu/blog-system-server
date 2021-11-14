@@ -12,7 +12,7 @@ public class CookieUtils {
     //1年
     public static final int default_age = 60 * 60 * 24 * 365;
 
-    public static final String domain = "xuyuanjun.cn";
+    public static final String domain = "sunofbeaches.com";
 
     /**
      * 设置cookie值

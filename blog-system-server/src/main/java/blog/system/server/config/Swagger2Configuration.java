@@ -10,65 +10,73 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
-/**
- * Description:
- *
- * @author 宣君
- * @date 2021-11-07 0:18
- */
 @Configuration
 public class Swagger2Configuration {
 
-    @Value("${blog.swagger.enable}")
-    private boolean enable;
+    @Value("${sob.blog.swagger.enable}")
+    private boolean isEnable;
 
+    //版本
     public static final String VERSION = "1.0.0";
 
+    /**
+     * 门户api，接口前缀：portal
+     *
+     * @return
+     */
     @Bean
     public Docket portalApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(portalApiInfo())
-                .enable(enable)
+                .enable(isEnable)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("blog.system.server.controller.portal"))
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.any()) // 可以根据url路径设置哪些请求加入文档，忽略哪些请求
                 .build()
                 .groupName("门户站点");
     }
+
     private ApiInfo portalApiInfo() {
         return new ApiInfoBuilder()
-                .title("宣君博客系统门户接口文档")
-                .description("门户接口文档")
-                .version(VERSION)
+                .title("门户站点") //设置文档的标题
+                .description("门户站点") // 设置文档的描述
+                .version(VERSION) // 设置文档的版本信息-> 1.0.0 Version information
                 .build();
     }
 
 
+    /**
+     * 管理中心api，接口前缀：admin
+     *
+     * @return
+     */
     @Bean
     public Docket adminApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(adminApiInfo())
-                .enable(enable)
+                .enable(isEnable)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("blog.system.server.controller.admin"))
-                .paths(PathSelectors.any())
+                .paths(PathSelectors.any()) // 可以根据url路径设置哪些请求加入文档，忽略哪些请求
                 .build()
                 .groupName("管理中心");
     }
 
+
     private ApiInfo adminApiInfo() {
         return new ApiInfoBuilder()
-                .title("宣君博客系统后台管理中心接口文档")
-                .description("管理中心接口")
-                .version(VERSION)
+                .title("管理中心") //设置文档的标题
+                .description("管理中心") // 设置文档的描述
+                .version(VERSION) // 设置文档的版本信息-> 1.0.0 Version information
                 .build();
     }
+
 
     @Bean
     public Docket UserApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(userApiInfo())
-                .enable(enable)
+                .enable(isEnable)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("blog.system.server.controller.user"))
                 .paths(PathSelectors.any()) // 可以根据url路径设置哪些请求加入文档，忽略哪些请求
@@ -78,8 +86,29 @@ public class Swagger2Configuration {
 
     private ApiInfo userApiInfo() {
         return new ApiInfoBuilder()
-                .title("阳光沙滩博客系统用户接口") //设置文档的标题
-                .description("用户接口的接口") // 设置文档的描述
+                .title("用户中心") //设置文档的标题
+                .description("用户中心") // 设置文档的描述
+                .version(VERSION) // 设置文档的版本信息-> 1.0.0 Version information
+                .build();
+    }
+
+
+    @Bean
+    public Docket TestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(userApiInfo())
+                .enable(isEnable)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("blog.system.server.controller.test"))
+                .paths(PathSelectors.any()) // 可以根据url路径设置哪些请求加入文档，忽略哪些请求
+                .build()
+                .groupName("测试接口");
+    }
+
+    private ApiInfo tesApiInfo() {
+        return new ApiInfoBuilder()
+                .title("测试接口") //设置文档的标题
+                .description("测试接口") // 设置文档的描述
                 .version(VERSION) // 设置文档的版本信息-> 1.0.0 Version information
                 .build();
     }

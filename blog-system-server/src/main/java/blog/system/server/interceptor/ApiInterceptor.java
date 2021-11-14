@@ -1,10 +1,14 @@
 package blog.system.server.interceptor;
 
-import blog.system.server.utils.*;
+
+import blog.system.server.response.ResponseResult;
+import blog.system.server.utils.Constants;
+import blog.system.server.utils.CookieUtils;
+import blog.system.server.utils.RedisUtils;
+import blog.system.server.utils.TextUtils;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -13,9 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
-/**
- * 拦截器：拦截用户提交频率
- */
 @Component
 @Slf4j
 public class ApiInterceptor extends HandlerInterceptorAdapter {
@@ -43,7 +44,7 @@ public class ApiInterceptor extends HandlerInterceptorAdapter {
                         //从redis里获取，判断是否存在，如果存在，则返回提交太频繁
                         response.setCharacterEncoding("UTF-8");
                         response.setContentType("application/json");
-                        ResponseResult failed = new ResponseResult(HttpStatus.BAD_REQUEST,"提交过于频繁,请稍后重试.");
+                        ResponseResult failed = ResponseResult.FAILED("提交过于频繁,请稍后重试.");
                         PrintWriter writer = response.getWriter();
                         writer.write(gson.toJson(failed));
                         writer.flush();

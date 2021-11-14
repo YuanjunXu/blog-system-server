@@ -1,16 +1,13 @@
 package blog.system.server.controller.admin;
 
 import blog.system.server.interceptor.CheckTooFrequentCommit;
-import blog.system.server.service.IImageService;
-import blog.system.server.utils.ResponseResult;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import blog.system.server.response.ResponseResult;
+import blog.system.server.services.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@Api(tags = "图片存储")
 @RestController
 @RequestMapping("/admin/image")
 public class ImageAdminApi {
@@ -26,7 +23,6 @@ public class ImageAdminApi {
      * @param file
      * @return
      */
-    @ApiOperation("图片上传")
     @CheckTooFrequentCommit
     @PreAuthorize("@permission.admin()")
     @PostMapping("/{original}")
@@ -34,14 +30,12 @@ public class ImageAdminApi {
         return imageService.uploadImage(original, file);
     }
 
-    @ApiOperation("图片删除")
     @PreAuthorize("@permission.admin()")
     @DeleteMapping("/{imageId}")
     public ResponseResult deleteImage(@PathVariable("imageId") String imageId) {
         return imageService.deleteById(imageId);
     }
 
-    @ApiOperation("图片列表")
     @PreAuthorize("@permission.admin()")
     @GetMapping("/list/{page}/{size}")
     public ResponseResult listImages(@PathVariable("page") int page,

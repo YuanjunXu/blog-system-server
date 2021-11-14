@@ -7,14 +7,9 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-/**
- * Description:
- *
- * @author 宣君
- * @date 2021-11-07 0:24
- */
 @Configuration
 public class RedisConfiguration {
+
     @Autowired
     private RedisConnectionFactory redisConnectionFactory;
 
