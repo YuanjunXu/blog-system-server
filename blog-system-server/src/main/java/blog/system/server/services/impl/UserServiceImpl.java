@@ -75,10 +75,10 @@ public class UserServiceImpl extends BaseUserService implements IUserService {
         //第五步：检查图灵验证码是否正确
         String captchaVerifyCode = (String) redisUtils.get(Constants.User.KEY_CAPTCHA_CONTENT + captchaKey);
         if (TextUtils.isEmpty(captchaVerifyCode)) {
-            return ResponseResult.FAILED("人类验证码已过期");
+            return ResponseResult.FAILED("图灵验证码已过期");
         }
         if (!captchaVerifyCode.equals(captchaCode)) {
-            return ResponseResult.FAILED("人类验证码不正确");
+            return ResponseResult.FAILED("图灵验证码不正确");
         } else {
             redisUtils.del(Constants.User.KEY_CAPTCHA_CONTENT + captchaKey);
         }

@@ -191,18 +191,6 @@ public class ArticleServiceImpl extends BaseService implements IArticleService {
         }
         //入库，统计
         for (String label : labelList) {
-            //找出来
-            //Label targetLabel = labelDao.findOneByName(label);
-            //if (targetLabel == null) {
-            //    targetLabel = new Label();
-            //    targetLabel.setId(idWorker.nextId() + "");
-            //    targetLabel.setCount(0);
-            //    targetLabel.setName(label);
-            //    targetLabel.setCreateTime(new Date());
-            //}
-            //long count = targetLabel.getCount();
-            //targetLabel.setCount(++count);
-            //targetLabel.setUpdateTime(new Date());
             int result = labelDao.updateCountByName(label);
             if (result == 0) {
                 Label targetLabel = new Label();
@@ -435,6 +423,8 @@ public class ArticleServiceImpl extends BaseService implements IArticleService {
         articleFromDb.setUpdateTime(new Date());
         articleDao.save(articleFromDb);
         redisUtils.del(Constants.Article.KEY_ARTICLE_CACHE + articleId, Constants.Article.KEY_ARTICLE_LIST_FIRST_PAGE);
+        //打散标签，入库，统计
+        this.setupLabels(article.getLabel());
         //返回结果
         return ResponseResult.SUCCESS("文章更新成功.");
     }

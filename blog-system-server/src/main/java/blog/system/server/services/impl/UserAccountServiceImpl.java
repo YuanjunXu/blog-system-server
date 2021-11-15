@@ -11,6 +11,7 @@ import blog.system.server.utils.TextUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +63,8 @@ public class UserAccountServiceImpl extends BaseUserService implements IUserAcco
         //原密码
         String password = sobUser.getPassword();
         //加密码
-        String encode = bCryptPasswordEncoder.encode(password);
+        String md5Bytes = DigestUtils.md5DigestAsHex(password.getBytes());
+        String encode = bCryptPasswordEncoder.encode(md5Bytes);
         sobUser.setPassword(encode);
         //保存到数据库里
         userDao.save(sobUser);
@@ -93,7 +95,7 @@ public class UserAccountServiceImpl extends BaseUserService implements IUserAcco
         HttpServletResponse response = getResponse();
         String captchaValue = (String) redisUtils.get(Constants.User.KEY_CAPTCHA_CONTENT + captchaKey);
         if (!captcha.equals(captchaValue)) {
-            return ResponseResult.FAILED("人类验证码不正确");
+            return ResponseResult.FAILED("图灵验证码不正确");
         }
         //验证成功，删除redis里的验证码
         redisUtils.del(Constants.User.KEY_CAPTCHA_CONTENT + captchaKey);

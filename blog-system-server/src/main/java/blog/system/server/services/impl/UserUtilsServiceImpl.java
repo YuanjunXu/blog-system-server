@@ -60,7 +60,7 @@ public class UserUtilsServiceImpl extends BaseUserService implements IUserUtilsS
         String captchaId = CookieUtils.getCookie(getRequest(), Constants.User.LAST_CAPTCHA_ID);
         String captcha = (String) redisUtils.get(Constants.User.KEY_CAPTCHA_CONTENT + captchaId);
         if (!captchaCode.equals(captcha)) {
-            return ResponseResult.FAILED("人类验证码不正确");
+            return ResponseResult.FAILED("图灵验证码不正确");
         }
         //检查邮箱code
         String redisVerifyCode = (String) redisUtils.get(Constants.User.KEY_EMAIL_CODE_CONTENT + email);
@@ -195,12 +195,12 @@ public class UserUtilsServiceImpl extends BaseUserService implements IUserUtilsS
      */
     @Override
     public ResponseResult sendEmail(String type, HttpServletRequest request, String address, String captchaCode) {
-        //检查人类验证码是否正确
+        //检查图灵验证码是否正确
         //从cookies里拿到key
         String captchaId = CookieUtils.getCookie(request, Constants.User.LAST_CAPTCHA_ID);
         String captchaValue = (String) redisUtils.get(Constants.User.KEY_CAPTCHA_CONTENT + captchaId);
         if (!captchaCode.equals(captchaValue)) {
-            return ResponseResult.FAILED("人类验证码不正确");
+            return ResponseResult.FAILED("图灵验证码不正确");
         }
         if (address == null) {
             return ResponseResult.FAILED("邮箱地址不可以为空");
