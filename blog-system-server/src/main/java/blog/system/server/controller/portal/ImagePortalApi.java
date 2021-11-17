@@ -1,12 +1,10 @@
 package blog.system.server.controller.portal;
 
 
+import blog.system.server.response.ResponseResult;
 import blog.system.server.services.IImageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,5 +29,12 @@ public class ImagePortalApi {
     @GetMapping("/qr-code/{code}")
     public void getQrCodeImage(@PathVariable("code") String code, HttpServletResponse response, HttpServletRequest request) {
         imageService.createQrCode(code, response, request);
+    }
+
+    @GetMapping("/list/{page}/{size}")
+    public ResponseResult listImages(@PathVariable("page") int page,
+                                     @PathVariable("size") int size,
+                                     @RequestParam(value = "original", required = false) String original) {
+        return imageService.listImages(page, size, original);
     }
 }

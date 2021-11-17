@@ -1,14 +1,12 @@
 package blog.system.server.controller.portal;
 
+import blog.system.server.pojo.Article;
 import blog.system.server.response.ResponseResult;
 import blog.system.server.services.IArticleService;
 import blog.system.server.services.ICategoryService;
 import blog.system.server.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/portal/article")
@@ -52,6 +50,17 @@ public class ArticlePortalApi {
     @GetMapping("/{articleId}")
     public ResponseResult getArticleDetail(@PathVariable("articleId") String articleId) {
         return articleService.getArticleById(articleId);
+    }
+
+    /**
+     * 普通用户获取文章进行编辑
+     *
+     * @param articleId
+     * @return
+     */
+    @GetMapping("/get_article_for_user_edit/{articleId}")
+    public ResponseResult getArticleByIdForUserEdit(@PathVariable("articleId") String articleId) {
+        return articleService.getArticleByIdForUserEdit(articleId);
     }
 
     /**
@@ -101,6 +110,16 @@ public class ArticlePortalApi {
     @GetMapping("/categories")
     public ResponseResult getCategories() {
         return categoryService.listCategories();
+    }
+
+    @PostMapping("/post_article")
+    public ResponseResult postArticle(@RequestBody Article article) {
+        return articleService.postArticle(article);
+    }
+
+    @PutMapping("/update_article/{articleId}")
+    public ResponseResult updateArticle(@PathVariable("articleId") String articleId, @RequestBody Article article) {
+        return articleService.updateArticle(articleId, article);
     }
 
 }

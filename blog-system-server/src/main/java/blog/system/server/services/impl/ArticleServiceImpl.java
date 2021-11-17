@@ -15,6 +15,7 @@ import blog.system.server.utils.RedisUtils;
 import blog.system.server.utils.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.overzealous.remark.Remark;
 import com.vladsch.flexmark.ext.jekyll.tag.JekyllTagExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
 import com.vladsch.flexmark.ext.toc.SimTocExtension;
@@ -230,7 +231,7 @@ public class ArticleServiceImpl extends BaseService implements IArticleService {
             return ResponseResult.SUCCESS("获取文章列表成功.").setData(result);
         }
         //创建分页和排序条件
-        Sort sort = new Sort(Sort.Direction.DESC,"createTime" );
+        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
         Pageable pageable = PageRequest.of(page - 1, size, sort);
         //开始查询
         Page<ArticleNoContent> all = articleNoContentDao.findAll(new Specification<ArticleNoContent>() {
@@ -369,6 +370,36 @@ public class ArticleServiceImpl extends BaseService implements IArticleService {
             return ResponseResult.PERMISSION_DENIED();
         }
         //返回结果
+        return ResponseResult.SUCCESS("获取文章成功.").setData(article);
+    }
+
+    /**
+     * 普通用户获取文章，然后进行编辑
+     *
+     * @param articleId
+     * @return
+     */
+    @Override
+    public ResponseResult getArticleByIdForUserEdit(String articleId) {
+        //先从redis里获取文章
+        //如果没有，再去mysql里获取
+        String articleJson = (String) redisUtils.get(Constants.Article.KEY_ARTICLE_CACHE + articleId);
+        if (!TextUtils.isEmpty(articleJson)) {
+            log.info("article detail from redis ... ");
+            Article article = gson.fromJson(articleJson, Article.class);
+            // html 2 markdown
+            Remark remark = new Remark();
+            String content = remark.convert(article.getContent());
+            article.setContent(content);
+            return ResponseResult.SUCCESS("获取文章成功.").setData(article);
+        }
+
+        //查询出文章
+        Article article = articleDao.findOneById(articleId);
+        if (article == null) {
+            return ResponseResult.FAILED("文章不存在.");
+        }
+        //可以返回
         return ResponseResult.SUCCESS("获取文章成功.").setData(article);
     }
 

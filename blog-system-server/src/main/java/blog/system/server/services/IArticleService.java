@@ -10,6 +10,7 @@ public interface IArticleService {
                                 String categoryId, String state);
 
     ResponseResult getArticleById(String articleId);
+    ResponseResult getArticleByIdForUserEdit(String articleId);
 
     ResponseResult updateArticle(String articleId, Article article);
 
