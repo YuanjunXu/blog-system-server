@@ -119,11 +119,11 @@ public class BaseUserService extends BaseService implements IBaseUserService {
             //根据来源删除refreshToken中对应的token_key
             refreshTokenDao.deleteMobileTokenKey(oldTokenKey);
         } else if (Constants.FROM_PC.equals(from)) {
-            //确保单端登录，删除redis里的token
-            if (oldRefreshToken != null) {
-                redisUtils.del(Constants.User.KEY_TOKEN + oldRefreshToken.getTokenKey());
-            }
-            refreshTokenDao.deletePcTokenKey(oldTokenKey);
+            //确保单端登录，删除redis里的token。注释下面代码允许多端同时登陆
+//            if (oldRefreshToken != null) {
+//                redisUtils.del(Constants.User.KEY_TOKEN + oldRefreshToken.getTokenKey());
+//            }
+//            refreshTokenDao.deletePcTokenKey(oldTokenKey);
         }
 
         //生成token,claims已经包含from了
