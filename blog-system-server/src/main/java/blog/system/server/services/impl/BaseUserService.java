@@ -141,19 +141,19 @@ public class BaseUserService extends BaseService implements IBaseUserService {
         //先判断数据库里没有有没refreshToken
         //如果有的话就更新
         //如果没有就新创建
+        String refreshTokenValue = "";
         RefreshToken refreshToken = refreshTokenDao.findOneByUserId(userFromDb.getId());
         if (refreshToken == null) {
             refreshToken = new RefreshToken();
             refreshToken.setId(idWorker.nextId() + "");
             refreshToken.setCreateTime(new Date());
             refreshToken.setUserId(userFromDb.getId());
+            // 过期了 生成新的refreshToken
+            refreshTokenValue = JwtUtil.createRefreshToken(userFromDb.getId(), Constants.TimeValueInMillions.MONTH);
+            refreshToken.setRefreshToken(refreshTokenValue);
         }
-        //不管过期了，还是新登录，都生成/更新refreshToken
-        //生成refreshToken
-        String refreshTokenValue = JwtUtil.createRefreshToken(userFromDb.getId(), Constants.TimeValueInMillions.MONTH);
         //保存到数据库里
         //refreshToken，tokenKey，用户ID，创建时间，更新时间
-        refreshToken.setRefreshToken(refreshTokenValue);
         //要判断来源，如果是移动端的就设置到移动端那里去
         //如果是PC的就设置到默认的
         if (Constants.FROM_PC.equals(from)) {
