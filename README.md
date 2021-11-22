@@ -1,7 +1,7 @@
 # blogSystem-server
 
 #### 介绍
-博客系统后台服务
+博客系统后台服务，采用Springboot,jpa,SpringSecurity进行开发
 
 #### 软件架构
 软件架构说明
